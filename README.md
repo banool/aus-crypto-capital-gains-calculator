@@ -5,5 +5,5 @@ Figures out capital gains per coin based on a Coinjar transaction record csv.
 ```
 pipenv shell
 pipenv install
-python main.py data/fake.csv
+python main.py -d data/fake.csv
 ```

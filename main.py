@@ -62,7 +62,7 @@ def parse_args():
     return args
 
 
-def load_data(data_path):
+def load_transactions(data_path):
     transactions = []
     with open(data_path, "r", newline='') as f:
         reader = csv.DictReader(f)
@@ -81,6 +81,20 @@ def load_data(data_path):
     return transactions
 
 
+def get_currencies(transactions):
+    """ Determine all currencies traded in, excluding AUD. """
+    currencies = set()
+    for t in transactions:
+        currencies.add(t.sold.unit)
+        currencies.add(t.bought.unit)
+    currencies.remove("AUD")
+    return currencies
+
+
+def calculate_capital_gain(transactions, currency):
+    pass
+
+
 def main():
     args = parse_args()
 
@@ -89,8 +103,14 @@ def main():
     else:
         LOG.setLevel("INFO")
 
-    data = load_data(args.data_path)
-    print(data[0:2])
+    transactions = load_transactions(args.data_path)
+
+    LOG.debug(f"Loaded {len(transactions)} transactions")
+
+    currencies = get_currencies(transactions)
+
+    LOG.debug(f"Calculating capital gain for these currencies: {currencies}")
+
 
 
 if __name__ == "__main__":
