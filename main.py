@@ -184,7 +184,7 @@ def get_transactions_for_currency(transactions, currency):
 
 
 
-def calculate_capital_gain(transactions, currency):
+def calculate_capital_gain(transactions, currency, method="FIFO"):
     """
     Warning: It is possible that a user will receive some amount of a currency
     from another exchange, then sell more in this exchange than they ever bought
@@ -216,24 +216,35 @@ def calculate_capital_gain(transactions, currency):
         else:
             while sold.amount > 0:
                 try:
-                    if sold.amount < 0.0000001:
+                    if sold.amount < 0.00001:
                         # Catch the case where sold is tiny due to floating point rounding errors.
                         break
-                    capital_gain_delta, exhausted = lots[-1].subtract_sell(sold)
+                    if method == "FIFO":
+                        popped = lots[0]
+                    elif method == "LIFO":
+                        popped = lots[-1]
+                    else:
+                        raise RuntimeError("lsdjkfjklsdkjfl")
+                    capital_gain_delta, exhausted = popped.subtract_sell(sold)
                 except IndexError:
                     raise RuntimeError(
                         f"Ran out of lots for {currency}. "
                         f"This means more was sold than was ever bought"
                     )
                 capital_gain += capital_gain_delta
-                if sold.amount < 0 or lots[-1].amount < 0:
+                if sold.amount < 0 or popped.amount < 0:
                     raise RuntimeError(
                         "Somehow buy or sell half went below zero. "
                         "This is a logic error."
                     )
-                if exhausted:
-                    LOG.debug(f"Popping {lots[-1]}")
-                    lots.pop()
+                if exhausted or popped.amount < 0.0001:
+                    LOG.debug(f"Popping {popped}")
+                    if method == "FIFO":
+                        lots.pop(0)
+                    elif method == "LIFO":
+                        lots.pop()
+                    else:
+                        raise RuntimeError("lsdjkfjklsdkjfl")
                 LOG.debug(f"Capital gain is {capital_gain}")
     return capital_gain
 
@@ -243,6 +254,7 @@ def parse_args():
     parser.add_argument("data_path")
     parser.add_argument("-d", "--debug", action="store_true")
     parser.add_argument("--allowlist", nargs="*")
+    parser.add_argument("--method", default="FIFO")
     args = parser.parse_args()
     args.allowlist = args.allowlist or []
     return args
@@ -271,7 +283,7 @@ def main():
         ts = get_transactions_for_currency(transactions, currency)
         for t in ts:
             LOG.debug(t)
-        capital_gain = calculate_capital_gain(ts, currency)
+        capital_gain = calculate_capital_gain(ts, currency, method=args.method)
         LOG.info(f"Capital gain for {currency} is {capital_gain:.2f} AUD")
 
 
