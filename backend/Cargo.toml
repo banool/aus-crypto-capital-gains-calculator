@@ -1,0 +1,11 @@
+[package]
+name = "backend"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+calculator = { path = "../calculator" }
+reader = { path = "../reader" }
+types = { path = "../types" }
+anyhow = "1.0.44"
+chrono = "0.4.19"

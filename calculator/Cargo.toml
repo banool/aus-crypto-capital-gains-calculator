@@ -1,0 +1,9 @@
+[package]
+name = "calculator"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+types = { path = "../types" }
+anyhow = "1.0.44"
+structopt = "0.3.23"

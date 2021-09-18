@@ -1,9 +1,12 @@
-# CoinJar capital gains calculator
-Figures out capital gains per coin based on a Coinjar transaction record csv.
+# Australian Crypto Capital Gains Calculator
 
 ## Running
+
+### GUI
+todo
+
+### CLI
+To run the CLI, loading up one file using the CoinJar reader, try this:
 ```
-pipenv shell
-pipenv install
-python main.py -d data/fake.csv
+cargo run -p cli -- --calculator fifo --paths data/CoinJar1.csv --readers coinjar
 ```

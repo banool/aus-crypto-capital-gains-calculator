@@ -1,0 +1,11 @@
+[package]
+name = "reader"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+types = { path = "../types" }
+anyhow = "1.0.44"
+chrono = "0.4.19"
+csv = "1.1.6"
+structopt = "0.3.23"
