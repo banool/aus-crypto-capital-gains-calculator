@@ -1,16 +1,18 @@
 use chrono::{DateTime, TimeZone};
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, Hash, PartialEq)]
 pub struct Currency(pub String);
 
+#[derive(Debug)]
 pub enum TransactionType {
     Buy,
     Sell,
 }
 
+#[derive(Debug)]
 pub struct Transaction {
     // Amount of the transaction. Always a postive number.
-    amount: u64,
+    amount: f64,
 
     // Currency the transaction was made in.
     // The other side of the transaction is assumed to be AUD.
@@ -25,4 +27,16 @@ pub struct Transaction {
 
     // When the transaction was made.
     pub unixtime: u64,
+}
+
+impl Transaction {
+    pub fn new(amount: f64, currency: Currency, rate: f64, transaction_type: TransactionType, unixtime: u64) -> Transaction {
+        Transaction {
+            amount,
+            currency,
+            rate,
+            transaction_type,
+            unixtime,
+        }
+    }
 }

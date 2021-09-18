@@ -2,6 +2,7 @@ use anyhow::{Context, Result};
 use std::collections::HashMap;
 use std::path::PathBuf;
 use types::{Currency, Transaction};
+use log::debug;
 
 // Reexport things callers might to use.
 pub use calculator::CalculatorType;
@@ -18,7 +19,7 @@ pub struct TransactionsFile {
 
 /// This function takes in a vec of TransactionsFiles, what readers to use for them,
 /// and returns a vec of Transactions.
-pub fn read_transactions(transactions_files: Vec<TransactionsFile>) -> Result<Vec<Transaction>> {
+fn read_transactions(transactions_files: Vec<TransactionsFile>) -> Result<Vec<Transaction>> {
     let mut transactions: Vec<Transaction> = Vec::new();
     for transactions_file in transactions_files {
         let reader = transactions_file.reader_type.get_reader();
@@ -36,6 +37,10 @@ pub fn calculate_capital_gains(
 ) -> Result<HashMap<Currency, f64>> {
     let transactions =
         read_transactions(transactions_files).context("Failed to read transactions")?;
+    debug!("Transactions:");
+    for t in &transactions {
+        debug!("{:?}", t);
+    }
     let calcuator = calculator_type.get_calculator();
     let capital_gains = calcuator
         .calculate_capital_gains(transactions)
