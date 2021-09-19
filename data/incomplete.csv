@@ -1,0 +1,4 @@
+uuid,transacted_at,account_name,currency,debit,credit,balance,action,description,counterparty,counterparty_amount,counterparty_currency,rates,fee_amount,fee_currency
+aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa,2020-08-24 00:03:05 UTC,Cash Account,AUD,,10,10,Deposit AUD,NPP / PayID,,,,,,
+bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb,2020-08-25 00:03:45 UTC,Cash Account,AUD,10,,0,Bought Bitcoin,BTC/AUD,MyBTC,0.00060753,BTC,"1 BTC = $16,460 AUD",0.00000608,BTC
+cccccccc-cccc-cccc-cccc-cccccccc,2020-08-25 00:03:45 UTC,Cash Account,BTC,1.23456789,,24385.18,Sold Bitcoin,BTC/AUD,MyBTC,24385.18,AUD,"1 BTC = $19,752 AUD",0.00000608,BTC
