@@ -2,6 +2,11 @@
 
 This repo contains my efforts to build a generic tool for consuming crypto trades and determining the capital gains from them.
 
+Success      |  Failure (due to incomplete data)
+:------------------------------:|:-----------------------------:
+![Screenshot showing success](https://github.com/banool/aus-crypto-capital-gains-calculator/blob/main/images/success1.png?raw=true) | ![Screenshot showing failure (due to incomplete data)](https://github.com/banool/aus-crypto-capital-gains-calculator/blob/main/images/fail1.png?raw=true)
+
+
 ## Running
 If you want to use the GUI and don't want / know how to build it yourself, check out the [Releases](https://github.com/banool/aus-crypto-capital-gains-calculator/releases) tab. You can download a binary for your operating system there.
 
@@ -11,7 +16,7 @@ If you want to use the GUI and don't want / know how to build it yourself, check
 ```
 cargo run -p gui
 ```
-For testing, open `data/fake.csv`. This should succeed.
+For testing, open `data/fake.csv`. This should succeed. If you want to see the failure case, open `data/incomplete.csv` instead. This data has sells amounting to more than its buys, which means we have insufficient data to calculate the results (at least using the FIFO strategy).
 
 ### CLI
 To run the CLI, loading up one file using the CoinJar reader, try this:
