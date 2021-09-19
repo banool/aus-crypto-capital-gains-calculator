@@ -1,9 +1,14 @@
 # Australian Crypto Capital Gains Calculator
 
+This repo contains my efforts to build a generic tool for consuming crypto trades and determining the capital gains from them.
+
 ## Running
 
 ### GUI
-todo
+```
+cargo run -p gui
+```
+For testing, open `data/fake.csv`. This should succeed.
 
 ### CLI
 To run the CLI, loading up one file using the CoinJar reader, try this:
@@ -17,3 +22,12 @@ Output:
 ```
 
 If you would like to see debug output, include `-d`.
+
+## Missing stuff
+There are lots of things you could add to this:
+
+- Additional readers for different data sources.
+- Additional calculators, like LIFO. If doing this, you'd likely want to refactor the FIFO code, since most of it would be the same.
+- Date range based filtering. For example, filter out transactions that didn't occur in the last financial year.
+- Different GUIs. For example, it might be nice to take Bevy for a spin. Ultimately all Rust GUIs are pretty new, so I imagine you could do a lot if you came back to this in a couple of years.
+- Even though you can ostensibly avoid importing druid in dependencies with tricks like partial_eq derives on the fields or Rc, when it comes to the Dropdown, I couldn't avoid that. It'd be nice to find a way to use ReaderType as a Dropdown option without having to make implement Data and therefore pollute the rest of the crates with Druid. Instead I made it a String and processed it myself later, which isn't very solid.

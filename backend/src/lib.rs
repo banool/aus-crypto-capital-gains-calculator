@@ -2,11 +2,12 @@ use anyhow::{Context, Result};
 use log::debug;
 use std::collections::HashMap;
 use std::path::PathBuf;
-use types::{Currency, Transaction};
+use types::Transaction;
 
 // Reexport things callers might to use.
 pub use calculator::CalculatorType;
 pub use reader::ReaderType;
+pub use types::Currency;
 
 #[derive(Debug)]
 pub struct TransactionsFile {

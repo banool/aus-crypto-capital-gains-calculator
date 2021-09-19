@@ -1,2 +1,2 @@
 [workspace]
-members = ["backend", "calculator", "cli", "reader", "types"]
+members = ["backend", "calculator", "cli", "gui", "reader", "types"]

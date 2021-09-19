@@ -1,0 +1,15 @@
+[package]
+name = "gui"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies.druid]
+git = "https://github.com/linebender/druid"
+rev = "232314d5d9ea455c04c384916e4b72a1f85998ec"
+features = ["im"]
+
+[dependencies]
+anyhow = "1.0.44"
+backend = { path = "../backend" }
+druid-widget-nursery = { git = "https://github.com/linebender/druid-widget-nursery", rev = "8b3bd2c" }
+itertools = "0.10.1"
