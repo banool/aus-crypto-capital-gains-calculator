@@ -4,10 +4,11 @@ use chrono::Utc;
 use std::path::PathBuf;
 use types::Transaction;
 
-pub struct MysteryReader {}
+pub struct CoinjarSimpleReader {}
 
-impl Reader for MysteryReader {
+impl Reader for CoinjarSimpleReader {
     fn read_transactions(&self, path: &PathBuf) -> Result<Vec<Transaction>> {
+        todo!();
         Ok(Vec::new())
     }
 }

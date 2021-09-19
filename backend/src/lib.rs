@@ -1,8 +1,8 @@
 use anyhow::{Context, Result};
+use log::debug;
 use std::collections::HashMap;
 use std::path::PathBuf;
 use types::{Currency, Transaction};
-use log::debug;
 
 // Reexport things callers might to use.
 pub use calculator::CalculatorType;

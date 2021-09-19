@@ -2,11 +2,11 @@ use structopt::clap::arg_enum;
 use types::{Transaction, TransactionType};
 
 mod coinjar;
-mod mystery;
+mod coinjar_simple;
 mod traits;
 
 use crate::coinjar::CoinjarReader;
-use crate::mystery::MysteryReader;
+use crate::coinjar_simple::CoinjarSimpleReader;
 use crate::traits::Reader;
 
 arg_enum! {
@@ -14,7 +14,7 @@ arg_enum! {
 #[derive(Clone, Debug)]
 pub enum ReaderType {
     Coinjar,
-    Mystery,
+    CoinjarSimple,
 }
 }
 
@@ -22,7 +22,7 @@ impl ReaderType {
     pub fn get_reader(&self) -> Box<dyn Reader> {
         match &self {
             Self::Coinjar => Box::new(coinjar::CoinjarReader {}),
-            Self::Mystery => Box::new(mystery::MysteryReader {}),
+            Self::CoinjarSimple => Box::new(coinjar_simple::CoinjarSimpleReader {}),
         }
     }
 }

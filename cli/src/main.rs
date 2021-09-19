@@ -1,5 +1,6 @@
 use anyhow::{bail, Result};
 use backend::{calculate_capital_gains, CalculatorType, ReaderType, TransactionsFile};
+use log::info;
 use std::path::PathBuf;
 use structopt::StructOpt;
 
@@ -52,7 +53,7 @@ fn main() -> Result<()> {
     let mut capital_gains: Vec<_> = capital_gains.into_iter().collect();
     capital_gains.sort_by(|x, y| x.1.partial_cmp(&y.1).unwrap());
     for (currency, capital_gain) in capital_gains {
-        println!("{}: {}", currency.0, capital_gain);
+        info!("Capital gain for {}: ${:.2} AUD", currency.0, capital_gain);
     }
     Ok(())
 }

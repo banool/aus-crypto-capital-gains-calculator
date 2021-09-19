@@ -1,11 +1,11 @@
 use crate::traits::Reader;
 use anyhow::Result;
-use std::path::PathBuf;
-use types::{Currency, Transaction, TransactionType};
-use serde::{Deserialize, Deserializer, de};
+use chrono::{DateTime, NaiveDateTime, Utc};
 use csv::Reader as CsvReader;
 use log::trace;
-use chrono::{DateTime, Utc, NaiveDateTime};
+use serde::{de, Deserialize, Deserializer};
+use std::path::PathBuf;
+use types::{Currency, Transaction, TransactionType};
 
 fn comma_float<'de, D: Deserializer<'de>>(deserializer: D) -> Result<f64, D::Error> {
     let buf = String::deserialize(deserializer)?;
@@ -13,7 +13,7 @@ fn comma_float<'de, D: Deserializer<'de>>(deserializer: D) -> Result<f64, D::Err
     let num = buf.parse::<f64>();
     match num {
         Ok(num) => Ok(num),
-        Err(e) => Err(serde::de::Error::custom(e))
+        Err(e) => Err(serde::de::Error::custom(e)),
     }
 }
 
@@ -33,8 +33,13 @@ struct Row {
 
 impl Into<Transaction> for Row {
     fn into(self) -> Transaction {
-        let rate: String = self.rates.split(" = $").collect::<Vec<_>>()[1].split_whitespace().collect::<Vec<_>>()[0].replace(",", "");
-        let rate: f64 = rate.parse::<f64>().expect(&format!("Failed to parse rate string {} as float", rate));
+        let rate: String = self.rates.split(" = $").collect::<Vec<_>>()[1]
+            .split_whitespace()
+            .collect::<Vec<_>>()[0]
+            .replace(",", "");
+        let rate: f64 = rate
+            .parse::<f64>()
+            .expect(&format!("Failed to parse rate string {} as float", rate));
         // This ignores fees for now.
         let (currency, transaction_type) = match self.currency == "AUD".to_string() {
             true => (self.counterparty_currency, TransactionType::Buy),
@@ -44,16 +49,11 @@ impl Into<Transaction> for Row {
             TransactionType::Buy => self.counterparty_amount,
             TransactionType::Sell => self.debit,
         };
-        let ndt = NaiveDateTime::parse_from_str(&self.transacted_at, "%Y-%m-%d %H:%M:%S %Z").expect("Failed to parse timestamp");
+        let ndt = NaiveDateTime::parse_from_str(&self.transacted_at, "%Y-%m-%d %H:%M:%S %Z")
+            .expect("Failed to parse timestamp");
         let dt = DateTime::<Utc>::from_utc(ndt, Utc);
         let unixtime = dt.timestamp() as u64;
-        Transaction::new(
-            amount,
-            Currency(currency),
-            rate,
-            transaction_type,
-            unixtime,
-        )
+        Transaction::new(amount, Currency(currency), rate, transaction_type, unixtime)
     }
 }
 
