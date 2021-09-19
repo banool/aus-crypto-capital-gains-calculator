@@ -3,11 +3,13 @@ use backend::{calculate_capital_gains, CalculatorType, ReaderType, TransactionsF
 use log::info;
 use std::path::PathBuf;
 use structopt::StructOpt;
+use structopt::clap::AppSettings::ColoredHelp;
 
 #[derive(Debug, StructOpt)]
 #[structopt(
     name = "aus-crypto-capital-gains-calculator",
-    author = "Daniel Porteous"
+    author = "Daniel Porteous",
+    setting(ColoredHelp),
 )]
 struct Args {
     /// Whether to enable debug logging.
