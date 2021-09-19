@@ -3,6 +3,9 @@
 This repo contains my efforts to build a generic tool for consuming crypto trades and determining the capital gains from them.
 
 ## Running
+If you want to use the GUI and don't want / know how to build it yourself, check out the [Releases](https://github.com/banool/aus-crypto-capital-gains-calculator/releases) tab. You can download a binary for your operating system there.
+
+## Developing
 
 ### GUI
 ```
