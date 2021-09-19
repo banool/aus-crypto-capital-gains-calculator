@@ -27,7 +27,8 @@ impl Calculator for FifoCalculator {
                     currency_transactions.push(t.clone());
                 }
             }
-            let capital_gain = self.calculate_capital_gains_single_currency(currency_transactions)?;
+            let capital_gain =
+                self.calculate_capital_gains_single_currency(currency_transactions)?;
             capital_gains.insert(currency, capital_gain);
         }
 
@@ -38,7 +39,10 @@ impl Calculator for FifoCalculator {
 impl FifoCalculator {
     // This function does not assert that all the transactions are indeed
     // for a single currency, but if they're not, it'll fail down the line.
-    fn calculate_capital_gains_single_currency(&self, transactions: Vec<Transaction>) -> Result<f64> {
+    fn calculate_capital_gains_single_currency(
+        &self,
+        transactions: Vec<Transaction>,
+    ) -> Result<f64> {
         // We keep track of purchases as individual lots in a queue (FIFO).
         let mut lots: VecDeque<Transaction> = VecDeque::new();
 
@@ -51,7 +55,7 @@ impl FifoCalculator {
                 TransactionType::Sell => {
                     // While this transaction has value remaining, use it to
                     // to subtract value from the lot at the head of the queue.
-                    let mut sell = transaction;  // Clearer naming for what is happening.
+                    let mut sell = transaction; // Clearer naming for what is happening.
                     while !sell.is_exhausted() {
                         if lots.len() == 0 {
                             // If we get to this condition, it means that while trying

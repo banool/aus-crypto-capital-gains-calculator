@@ -103,7 +103,10 @@ impl Transaction {
             self.amount = 0.0;
         }
         let capital_gain = sell_in_aud - buy_in_aud;
-        debug!("Buy is now {:?} and sell is now {:?}, capital gain is {}", self, other, capital_gain);
+        debug!(
+            "Buy is now {:?} and sell is now {:?}, capital gain is {}",
+            self, other, capital_gain
+        );
         capital_gain
     }
 }

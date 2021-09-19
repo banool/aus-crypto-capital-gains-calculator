@@ -10,7 +10,7 @@ use crate::traits::Reader;
 
 arg_enum! {
 /// This enum registers all the different reader options.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ReaderType {
     Coinjar,
     CoinjarSimple,
