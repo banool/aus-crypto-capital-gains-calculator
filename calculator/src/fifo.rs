@@ -2,8 +2,6 @@ use crate::Calculator;
 use anyhow::{bail, Result};
 use log::debug;
 use std::collections::{HashMap, VecDeque};
-use std::ops::IndexMut;
-use std::path::PathBuf;
 use types::{Currency, Transaction, TransactionType};
 
 pub struct FifoCalculator {}

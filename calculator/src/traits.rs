@@ -1,6 +1,5 @@
 use anyhow::Result;
 use std::collections::HashMap;
-use std::path::PathBuf;
 use types::{Currency, Transaction};
 
 pub trait Calculator {

@@ -3,7 +3,7 @@ use anyhow::Result;
 use chrono::{DateTime, NaiveDateTime, Utc};
 use csv::Reader as CsvReader;
 use log::trace;
-use serde::{de, Deserialize, Deserializer};
+use serde::{Deserialize, Deserializer};
 use std::path::PathBuf;
 use types::{Currency, Transaction, TransactionType};
 
@@ -61,7 +61,7 @@ pub struct CoinjarReader {}
 
 impl Reader for CoinjarReader {
     fn read_transactions(&self, path: &PathBuf) -> Result<Vec<Transaction>> {
-        let mut rdr = csv::Reader::from_path(&path)?;
+        let mut rdr = CsvReader::from_path(&path)?;
         let mut rows = Vec::new();
         for result in rdr.deserialize() {
             let row: Row = match result {
@@ -73,7 +73,7 @@ impl Reader for CoinjarReader {
             };
             rows.push(row);
         }
-        let mut transactions: Vec<Transaction> = rows.into_iter().map(|r| r.into()).collect();
+        let transactions: Vec<Transaction> = rows.into_iter().map(|r| r.into()).collect();
         Ok(transactions)
     }
 }

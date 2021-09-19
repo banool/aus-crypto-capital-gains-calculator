@@ -1,5 +1,4 @@
 use structopt::clap::arg_enum;
-use types::{Transaction, TransactionType};
 
 mod fifo;
 mod traits;
@@ -18,7 +17,7 @@ pub enum CalculatorType {
 impl CalculatorType {
     pub fn get_calculator(&self) -> Box<dyn Calculator> {
         match &self {
-            Self::Fifo => Box::new(fifo::FifoCalculator {}),
+            Self::Fifo => Box::new(FifoCalculator {}),
         }
     }
 }
