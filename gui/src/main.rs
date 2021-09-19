@@ -3,8 +3,8 @@ use backend::{calculate_capital_gains, CalculatorType, Currency, ReaderType, Tra
 use druid::commands::OPEN_FILE;
 use druid::im::{HashMap as ImHashMap, Vector};
 use druid::widget::{
-    Align, Button, Container, Flex, Label, LineBreaking, List, Padding,
-    RadioGroup, SizedBox, ViewSwitcher, WidgetExt,
+    Align, Button, Container, Flex, Label, LineBreaking, List, Padding, RadioGroup, SizedBox,
+    ViewSwitcher, WidgetExt,
 };
 use druid::{
     AppDelegate, AppLauncher, Color, Command, Data, DelegateCtx, Env, EventCtx, FileDialogOptions,
@@ -148,8 +148,8 @@ fn build_root_widget() -> impl Widget<InitialState> {
 
     // Button for clearing data sources.
     // The button to calculate the capital gains.
-    let clear_sources_button = Button::new("Clear sources")
-        .on_click(move |_, data: &mut InitialState, _| {
+    let clear_sources_button =
+        Button::new("Clear sources").on_click(move |_, data: &mut InitialState, _| {
             data.data_sources = Vector::new();
             data.capital_gains = None;
             data.error_text = None;
@@ -157,7 +157,12 @@ fn build_root_widget() -> impl Widget<InitialState> {
 
     // Add both buttons side by side.
     layout = layout
-        .with_child(Flex::row().with_child(open_button).with_spacer(HORIZONTAL_WIDGET_SPACING * 2.0).with_child(clear_sources_button))
+        .with_child(
+            Flex::row()
+                .with_child(open_button)
+                .with_spacer(HORIZONTAL_WIDGET_SPACING * 2.0)
+                .with_child(clear_sources_button),
+        )
         .with_spacer(VERTICAL_WIDGET_SPACING);
 
     // List of the files we've chosen to use as data sources.
@@ -207,8 +212,11 @@ fn build_root_widget() -> impl Widget<InitialState> {
                 Box::new(label)
             }
         },
-    )).width(600.0);
-    layout = layout.with_spacer(VERTICAL_WIDGET_SPACING).with_child(results_widget);
+    ))
+    .width(600.0);
+    layout = layout
+        .with_spacer(VERTICAL_WIDGET_SPACING)
+        .with_child(results_widget);
 
     // Finally present the widget starting from the top.
     Align::vertical(UnitPoint::TOP, layout)
