@@ -31,6 +31,12 @@ Output:
 
 If you would like to see debug output, include `-d`.
 
+## Releasing
+There is a Github Action set up to do most of the work, all you have to do to make a release is this:
+```
+gh release create `git rev-parse --short HEAD`
+```
+
 ## Missing stuff
 There are lots of things you could add to this:
 

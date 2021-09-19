@@ -1,5 +1,6 @@
 on:
-  push:
+  release:
+    types: [created]
 
 jobs:
   build_binaries_and_create_release:
@@ -23,3 +24,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUSTTARGET: ${{ matrix.target }}
           ARCHIVE_TYPES: ${{ matrix.archive }}
+          SRC_DIR: "gui"
